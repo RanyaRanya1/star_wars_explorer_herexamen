@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Star Wars Holocron Explorer</title>
+  <link rel="stylesheet" href="./src/style.css">
+</head>
+<body>
+  <header>
+    <h1>🌌 Star Wars Holocron</h1>
+    <button id="theme-toggle" class="btn">☯️ Changer de Côté (Thème)</button>
+  </header>
+
+  <main>
+    <section class="controls">
+      <form id="search-form">
+        <input type="text" id="search-input" placeholder="Rechercher un personnage (ex: Luke)..." required>
+        <button type="submit" class="btn">Rechercher</button>
+      </form>
+
+      <div class="filters">
+        <label for="gender-filter">Filtrer par genre :</label>
+        <select id="gender-filter">
+          <option value="all">Tous</option>
+          <option value="male">Homme</option>
+          <option value="female">Femme</option>
+          <option value="n/a">Droïde / N/A</option>
+        </select>
+      </div>
+    </section>
+
+    <section class="table-container">
+      <h2>Membres de la Galaxie</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Nom</th>
+            <th>Taille (cm)</th>
+            <th>Masse (kg)</th>
+            <th>Couleur des yeux</th>
+            <th>Année de naissance</th>
+            <th>Genre</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody id="characters-table-body">
+          </tbody>
+      </table>
+    </section>
+
+    <section class="favorites-container">
+      <h2>⭐ Mes Personnages Favoris</h2>
+      <ul id="favorites-list"></ul>
+    </section>
+  </main>
+
+  <script type="module" src="./src/app.js"></script>
+</body>
+</html>
