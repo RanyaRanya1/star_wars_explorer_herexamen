@@ -1,6 +1,9 @@
 import { fetchCharacters } from "./api.js";
 import { Character } from "./characterClass.js";
 
+const loadingMessage = document.querySelector("#loading-message");
+const errorMessage = document.querySelector("#error-message");
+
 const tableBody = document.querySelector("#characters-table-body");
 
 const renderCharacters = (characters) => {
@@ -28,13 +31,23 @@ const renderCharacters = (characters) => {
 };
 
 const initApp = async () => {
+  loadingMessage.hidden = false;
+  errorMessage.hidden = true;
+
   const data = await fetchCharacters();
+
+  if (data.length === 0) {
+    loadingMessage.hidden = true;
+    errorMessage.hidden = false;
+    return;
+  }
 
   const characters = data.map(
     (character) => new Character(character)
   );
 
   renderCharacters(characters);
-};
 
+  loadingMessage.hidden = true;
+};
 initApp();

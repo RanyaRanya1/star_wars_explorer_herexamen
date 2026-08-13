@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="nl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,49 +8,61 @@
 </head>
 <body>
   <header>
-    <h1>🌌 Star Wars Holocron</h1>
-    <button id="theme-toggle" class="btn">☯️ Changer de Côté (Thème)</button>
+    <h1>Star Wars Holocron</h1>
+    <button id="theme-toggle" class="btn">Wissel van kant (thema)</button>
   </header>
 
   <main>
     <section class="controls">
       <form id="search-form">
-        <input type="text" id="search-input" placeholder="Rechercher un personnage (ex: Luke)..." required>
-        <button type="submit" class="btn">Rechercher</button>
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Zoek een personage (bv. Luke)..."
+          required
+        >
+        <button type="submit" class="btn">Zoeken</button>
       </form>
 
       <div class="filters">
-        <label for="gender-filter">Filtrer par genre :</label>
+        <label for="gender-filter">Filter op geslacht:</label>
+
         <select id="gender-filter">
-          <option value="all">Tous</option>
-          <option value="male">Homme</option>
-          <option value="female">Femme</option>
-          <option value="n/a">Droïde / N/A</option>
+          <option value="all">Alle</option>
+          <option value="male">Man</option>
+          <option value="female">Vrouw</option>
+          <option value="n/a">Droid / N.v.t.</option>
         </select>
       </div>
     </section>
 
     <section class="table-container">
-      <h2>Membres de la Galaxie</h2>
+      <h2>Personages uit het sterrenstelsel</h2>
+<p id="loading-message">Personages worden geladen...</p>
+
+<p id="error-message" hidden>
+  De personages konden niet worden geladen.
+</p>
       <table>
         <thead>
           <tr>
-            <th>Nom</th>
-            <th>Taille (cm)</th>
-            <th>Masse (kg)</th>
-            <th>Couleur des yeux</th>
-            <th>Année de naissance</th>
-            <th>Genre</th>
-            <th>Action</th>
+            <th>Naam</th>
+            <th>Lengte (cm)</th>
+            <th>Gewicht (kg)</th>
+            <th>Oogkleur</th>
+            <th>Geboortejaar</th>
+            <th>Geslacht</th>
+            <th>Actie</th>
           </tr>
         </thead>
+
         <tbody id="characters-table-body">
-          </tbody>
+        </tbody>
       </table>
     </section>
 
     <section class="favorites-container">
-      <h2>⭐ Mes Personnages Favoris</h2>
+      <h2>Mijn favoriete personages</h2>
       <ul id="favorites-list"></ul>
     </section>
   </main>

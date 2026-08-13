@@ -5,8 +5,7 @@ export const fetchCharacters = async () => {
     const response = await fetch(API_URL);
 
     if (!response.ok) {
-      throw new Error("Impossible de récupérer les personnages.");
-    }
+throw new Error("De personages konden niet worden geladen.");    }
 
     const data = await response.json();
 
