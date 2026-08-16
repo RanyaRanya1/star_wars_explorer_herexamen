@@ -5,6 +5,10 @@ const loadingMessage = document.querySelector("#loading-message");
 const errorMessage = document.querySelector("#error-message");
 
 const tableBody = document.querySelector("#characters-table-body");
+const searchForm = document.querySelector("#search-form");
+const searchInput = document.querySelector("#search-input");
+
+let allCharacters = [];
 
 const renderCharacters = (characters) => {
   tableBody.innerHTML = "";
@@ -30,6 +34,21 @@ const renderCharacters = (characters) => {
   });
 };
 
+const searchCharacters = () => {
+  const searchValue = searchInput.value.toLowerCase();
+
+  const filteredCharacters = allCharacters.filter((character) => {
+    return character.name.toLowerCase().includes(searchValue);
+  });
+
+  renderCharacters(filteredCharacters);
+};
+
+searchForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+  searchCharacters();
+});
+
 const initApp = async () => {
   loadingMessage.hidden = false;
   errorMessage.hidden = true;
@@ -42,11 +61,11 @@ const initApp = async () => {
     return;
   }
 
-  const characters = data.map(
+  allCharacters = data.map(
     (character) => new Character(character)
   );
 
-  renderCharacters(characters);
+  renderCharacters(allCharacters);
 
   loadingMessage.hidden = true;
 };
