@@ -7,6 +7,7 @@ const errorMessage = document.querySelector("#error-message");
 const tableBody = document.querySelector("#characters-table-body");
 const searchForm = document.querySelector("#search-form");
 const searchInput = document.querySelector("#search-input");
+const genderFilter = document.querySelector("#gender-filter");
 
 let allCharacters = [];
 
@@ -70,3 +71,18 @@ const initApp = async () => {
   loadingMessage.hidden = true;
 };
 initApp();
+
+genderFilter.addEventListener("change", () => {
+  const selectedGender = genderFilter.value;
+
+  if (selectedGender === "all") {
+    renderCharacters(allCharacters);
+    return;
+  }
+
+  const filteredCharacters = allCharacters.filter((character) => {
+    return character.gender === selectedGender;
+  });
+
+  renderCharacters(filteredCharacters);
+});
