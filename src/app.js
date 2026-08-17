@@ -8,6 +8,8 @@ const tableBody = document.querySelector("#characters-table-body");
 const searchForm = document.querySelector("#search-form");
 const searchInput = document.querySelector("#search-input");
 const genderFilter = document.querySelector("#gender-filter");
+const sortSelect = document.querySelector("#sort-select");
+
 
 let allCharacters = [];
 
@@ -85,4 +87,20 @@ genderFilter.addEventListener("change", () => {
   });
 
   renderCharacters(filteredCharacters);
+});
+
+sortSelect.addEventListener("change", () => {
+  const sortedCharacters = [...allCharacters];
+
+  if (sortSelect.value === "name-asc") {
+    sortedCharacters.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+  } else {
+    sortedCharacters.sort((a, b) => {
+      return b.name.localeCompare(a.name);
+    });
+  }
+
+  renderCharacters(sortedCharacters);
 });
