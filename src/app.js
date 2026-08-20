@@ -10,6 +10,9 @@ const searchInput = document.querySelector("#search-input");
 const genderFilter = document.querySelector("#gender-filter");
 const sortSelect = document.querySelector("#sort-select");
 
+const favoritesList = document.querySelector("#favorites-list");
+
+let favorites = [];
 let allCharacters = [];
 
 const renderCharacters = (characters) => {
@@ -26,13 +29,30 @@ const renderCharacters = (characters) => {
       <td>${character.birthYear}</td>
       <td>${character.gender}</td>
       <td>
-        <button class="btn favorite-btn">
+        <button class="btn favorite-btn" data-name="${character.name}">
           Favoriet
         </button>
       </td>
     `;
 
     tableBody.appendChild(row);
+    const favoriteButton = row.querySelector(".favorite-btn");
+
+favoriteButton.addEventListener("click", () => {
+  favorites.push(character);
+  renderFavorites();
+  });
+};
+
+const renderFavorites = () => {
+  favoritesList.innerHTML = "";
+
+  favorites.forEach((character) => {
+    const listItem = document.createElement("li");
+
+    listItem.textContent = character.name;
+
+    favoritesList.appendChild(listItem);
   });
 };
 
