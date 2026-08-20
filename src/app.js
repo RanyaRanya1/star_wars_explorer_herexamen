@@ -10,7 +10,6 @@ const searchInput = document.querySelector("#search-input");
 const genderFilter = document.querySelector("#gender-filter");
 const sortSelect = document.querySelector("#sort-select");
 
-
 let allCharacters = [];
 
 const renderCharacters = (characters) => {
@@ -28,7 +27,7 @@ const renderCharacters = (characters) => {
       <td>${character.gender}</td>
       <td>
         <button class="btn favorite-btn">
-          ⭐ Favori
+          Favoriet
         </button>
       </td>
     `;
@@ -37,19 +36,48 @@ const renderCharacters = (characters) => {
   });
 };
 
-const searchCharacters = () => {
-  const searchValue = searchInput.value.toLowerCase();
+const updateCharacters = () => {
+  let filteredCharacters = [...allCharacters];
 
-  const filteredCharacters = allCharacters.filter((character) => {
-    return character.name.toLowerCase().includes(searchValue);
-  });
+  const searchValue = searchInput.value.toLowerCase();
+  const selectedGender = genderFilter.value;
+
+  if (searchValue !== "") {
+    filteredCharacters = filteredCharacters.filter((character) => {
+      return character.name.toLowerCase().includes(searchValue);
+    });
+  }
+
+  if (selectedGender !== "all") {
+    filteredCharacters = filteredCharacters.filter((character) => {
+      return character.gender === selectedGender;
+    });
+  }
+
+  if (sortSelect.value === "name-asc") {
+    filteredCharacters.sort((a, b) => {
+      return a.name.localeCompare(b.name);
+    });
+  } else {
+    filteredCharacters.sort((a, b) => {
+      return b.name.localeCompare(a.name);
+    });
+  }
 
   renderCharacters(filteredCharacters);
 };
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
-  searchCharacters();
+  updateCharacters();
+});
+
+genderFilter.addEventListener("change", () => {
+  updateCharacters();
+});
+
+sortSelect.addEventListener("change", () => {
+  updateCharacters();
 });
 
 const initApp = async () => {
@@ -64,43 +92,13 @@ const initApp = async () => {
     return;
   }
 
-  allCharacters = data.map(
-    (character) => new Character(character)
-  );
+  allCharacters = data.map((character) => {
+    return new Character(character);
+  });
 
   renderCharacters(allCharacters);
 
   loadingMessage.hidden = true;
 };
+
 initApp();
-
-genderFilter.addEventListener("change", () => {
-  const selectedGender = genderFilter.value;
-
-  if (selectedGender === "all") {
-    renderCharacters(allCharacters);
-    return;
-  }
-
-  const filteredCharacters = allCharacters.filter((character) => {
-    return character.gender === selectedGender;
-  });
-
-  renderCharacters(filteredCharacters);
-});
-
-sortSelect.addEventListener("change", () => {
-  const sortedCharacters = [...allCharacters];
-
-  if (sortSelect.value === "name-asc") {
-    sortedCharacters.sort((a, b) => {
-      return a.name.localeCompare(b.name);
-    });
-  } else {
-    sortedCharacters.sort((a, b) => {
-      return b.name.localeCompare(a.name);
-    });
-  }
-
-  renderCharacters(sortedCharacters);
-});
