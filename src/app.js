@@ -1,5 +1,6 @@
 import { fetchCharacters } from "./api.js";
 import { Character } from "./characterClass.js";
+import { saveFavorites, loadFavorites } from "./storage.js";
 
 const loadingMessage = document.querySelector("#loading-message");
 const errorMessage = document.querySelector("#error-message");
@@ -12,7 +13,7 @@ const sortSelect = document.querySelector("#sort-select");
 
 const favoritesList = document.querySelector("#favorites-list");
 
-let favorites = [];
+let favorites = loadFavorites();
 let allCharacters = [];
 
 const renderCharacters = (characters) => {
@@ -39,8 +40,16 @@ const renderCharacters = (characters) => {
     const favoriteButton = row.querySelector(".favorite-btn");
 
 favoriteButton.addEventListener("click", () => {
-  favorites.push(character);
-  renderFavorites();
+  const alreadyFavorite = favorites.some((favorite) => {
+    return favorite.name === character.name;
+  });
+
+  if (!alreadyFavorite) {
+    favorites.push(character);
+    saveFavorites(favorites);
+    renderFavorites();
+  }
+});
   });
 };
 
@@ -117,6 +126,7 @@ const initApp = async () => {
   });
 
   renderCharacters(allCharacters);
+  renderFavorites();
 
   loadingMessage.hidden = true;
 };
