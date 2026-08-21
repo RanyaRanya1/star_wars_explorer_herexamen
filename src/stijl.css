@@ -7,3 +7,14 @@ body {
   background-color: #111;
   color: white;
 }
+
+#characters-table-body tr {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: 0.4s;
+}
+
+#characters-table-body tr.visible {
+  opacity: 1;
+  transform: translateY(0);
+}

@@ -34,49 +34,58 @@ const renderCharacters = (characters) => {
         <button class="btn favorite-btn" data-name="${character.name}">
           Favoriet
         </button>
+
+        <button class="btn details-btn">
+          Details
+        </button>
       </td>
     `;
 
     tableBody.appendChild(row);
+
     const favoriteButton = row.querySelector(".favorite-btn");
+    const detailsButton = row.querySelector(".details-btn");
 
-favoriteButton.addEventListener("click", () => {
-  const alreadyFavorite = favorites.some((favorite) => {
-    return favorite.name === character.name;
-  });
-
-  if (!alreadyFavorite) {
-    favorites.push(character);
-    saveFavorites(favorites);
-    renderFavorites();
-  }
-});
-  });
-};
-
-const renderFavorites = () => {
-  favoritesList.innerHTML = "";
-
-  favorites.forEach((character) => {
-    const listItem = document.createElement("li");
-
-    listItem.innerHTML = `
-      ${character.name}
-      <button class="remove-favorite">Verwijderen</button>
-    `;
-
-    const removeButton = listItem.querySelector(".remove-favorite");
-
-    removeButton.addEventListener("click", () => {
-      favorites = favorites.filter((favorite) => {
-        return favorite.name !== character.name;
+    favoriteButton.addEventListener("click", () => {
+      const alreadyFavorite = favorites.some((favorite) => {
+        return favorite.name === character.name;
       });
 
-      saveFavorites(favorites);
-      renderFavorites();
+      if (!alreadyFavorite) {
+        favorites.push(character);
+        saveFavorites(favorites);
+        renderFavorites();
+      }
     });
 
-    favoritesList.appendChild(listItem);
+    detailsButton.addEventListener("click", () => {
+      alert(`
+Naam: ${character.name}
+Lengte: ${character.height} cm
+Gewicht: ${character.mass} kg
+Oogkleur: ${character.eyeColor}
+Geboortejaar: ${character.birthYear}
+Geslacht: ${character.gender}
+      `);
+    });
+  });
+
+  observeRows();
+};
+
+const observeRows = () => {
+  const rows = document.querySelectorAll("#characters-table-body tr");
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+      }
+    });
+  });
+
+  rows.forEach((row) => {
+    observer.observe(row);
   });
 };
 
