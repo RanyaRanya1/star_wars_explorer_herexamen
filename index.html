@@ -1,87 +1,159 @@
 <!DOCTYPE html>
 <html lang="nl">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Star Wars Holocron Explorer</title>
-<link rel="stylesheet" href="./src/stijl.css">
+
+  <title>Star Wars Explorer</title>
+
+  <link rel="stylesheet" href="./src/stijl.css">
 </head>
+
 <body>
+
   <header>
-    <h1>Star Wars Holocron</h1>
-    <button id="theme-toggle" class="btn">Wissel van kant (thema)</button>
+    <h1>Star Wars Explorer</h1>
+
+    <button id="theme-toggle" class="btn">
+      Wissel van kant (thema)
+    </button>
   </header>
 
+
   <main>
+
+    <!-- Zoeken, filteren en sorteren -->
     <section class="controls">
+
       <form id="search-form">
+
         <input
           type="text"
           id="search-input"
           placeholder="Zoek een personage (bv. Luke)..."
           required
         >
-        <p id="search-message" hidden></p>
-        <button type="submit" class="btn">Zoeken</button>
+
+        <button type="submit" class="btn">
+          Zoeken
+        </button>
+
       </form>
 
-      <div class="filters">
-        <label for="gender-filter">Filter op geslacht:</label>
+      <p id="search-message" hidden></p>
 
-        <select id="gender-filter">
-          <option value="all">Alle</option>
-          <option value="male">Man</option>
-          <option value="female">Vrouw</option>
-          <option value="n/a">Droid / N.v.t.</option>
-        </select>
+
+      <div class="filters">
+
+        <div>
+          <label for="gender-filter">
+            Filter op geslacht:
+          </label>
+
+          <select id="gender-filter">
+            <option value="all">Alle</option>
+            <option value="male">Man</option>
+            <option value="female">Vrouw</option>
+            <option value="n/a">Droid / N.v.t.</option>
+          </select>
+        </div>
+
 
         <div class="sort">
-  <label for="sort-select">Sorteer op:</label>
 
-  <select id="sort-select">
-    <option value="name-asc">Naam A-Z</option>
-    <option value="name-desc">Naam Z-A</option>
-  </select>
-</div>
+          <label for="sort-select">
+            Sorteer op:
+          </label>
+
+          <select id="sort-select">
+            <option value="name-asc">Naam A-Z</option>
+            <option value="name-desc">Naam Z-A</option>
+          </select>
+
+        </div>
 
       </div>
+
     </section>
 
-    <section class="table-container">
-      <h2>Personages uit het sterrenstelsel</h2>
-<p id="loading-message">Personages worden geladen...</p>
 
-<p id="error-message" hidden>
-  De personages konden niet worden geladen.
-</p>
-      <table>
-        <thead>
-          <tr>
-           <th>Naam</th>
-<th>Geslacht</th>
-<th>Actie</th>
-          </tr>
-        </thead>
+    <!-- Hoofdinhoud -->
+    <div class="content-layout">
 
+
+      <!-- Linkerkant: personages -->
+      <section class="table-container">
+
+        <h2>Personages uit het sterrenstelsel</h2>
+
+        <p id="loading-message">
+          Personages worden geladen...
+        </p>
+
+        <p id="error-message" hidden>
+          De personages konden niet worden geladen.
+        </p>
+
+
+        <table>
+
+          <thead>
+            <tr>
+              <th>Naam</th>
+              <th>Geslacht</th>
+              <th>Actie</th>
+            </tr>
+          </thead>
+
+          <tbody id="characters-table-body">
+          </tbody>
+
+        </table>
+
+      </section>
+
+
+      <!-- Rechterkant -->
+      <aside class="sidebar">
+
+
+        <!-- Details -->
         <section class="details-container">
-  <h2>Personage details</h2>
 
-  <div id="character-details">
-    <p>Klik op Details om meer informatie te zien.</p>
-  </div>
-</section>
+          <h2>Personage details</h2>
 
-        <tbody id="characters-table-body">
-        </tbody>
-      </table>
-    </section>
+          <div id="character-details">
 
-    <section class="favorites-container">
-      <h2>Mijn favoriete personages</h2>
-      <ul id="favorites-list"></ul>
-    </section>
+            <p>
+              Klik op Details om meer informatie te zien.
+            </p>
+
+          </div>
+
+        </section>
+
+
+        <!-- Favorieten -->
+        <section class="favorites-container">
+
+          <h2>Mijn favoriete personages</h2>
+
+          <ul id="favorites-list">
+          </ul>
+
+        </section>
+
+
+      </aside>
+
+    </div>
+
   </main>
 
+
   <script type="module" src="./src/app.js"></script>
+
 </body>
+
 </html>
