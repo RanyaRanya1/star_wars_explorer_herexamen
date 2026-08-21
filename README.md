@@ -95,8 +95,8 @@ Tijdens het project heb ik AI gebruikt als ondersteuning bij verschillende onder
 
 De AI-chatlog wordt toegevoegd volgens de richtlijnen van de opdracht.
 
-https://chatgpt.com/share/6a88b8ef-1c18-83eb-8178-bb74d4c4d1f0
 
+https://chatgpt.com/share/6a88c56b-f4f0-83eb-9ab4-22ee7e4dea52
 
 
 ## Installatie
