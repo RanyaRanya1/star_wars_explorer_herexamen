@@ -95,6 +95,10 @@ Tijdens het project heb ik AI gebruikt als ondersteuning bij verschillende onder
 
 De AI-chatlog wordt toegevoegd volgens de richtlijnen van de opdracht.
 
+https://chatgpt.com/share/6a88b8ef-1c18-83eb-8178-bb74d4c4d1f0
+
+
+
 ## Installatie
 
 Om het project lokaal te starten:
@@ -220,4 +224,4 @@ De AI-chatlog wordt toegevoegd volgens de richtlijnen van de opdracht.
 
 ## Auteur
 
-Dit project werd gemaakt voor het herexamen Web Advanced.
+Dit project werd gemaakt voor het herexamen Web Advanced. Rabib Ranya
