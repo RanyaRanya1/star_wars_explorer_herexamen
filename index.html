@@ -21,6 +21,7 @@
           placeholder="Zoek een personage (bv. Luke)..."
           required
         >
+        <p id="search-message" hidden></p>
         <button type="submit" class="btn">Zoeken</button>
       </form>
 
@@ -56,15 +57,19 @@
       <table>
         <thead>
           <tr>
-            <th>Naam</th>
-            <th>Lengte (cm)</th>
-            <th>Gewicht (kg)</th>
-            <th>Oogkleur</th>
-            <th>Geboortejaar</th>
-            <th>Geslacht</th>
-            <th>Actie</th>
+           <th>Naam</th>
+<th>Geslacht</th>
+<th>Actie</th>
           </tr>
         </thead>
+
+        <section class="details-container">
+  <h2>Personage details</h2>
+
+  <div id="character-details">
+    <p>Klik op Details om meer informatie te zien.</p>
+  </div>
+</section>
 
         <tbody id="characters-table-body">
         </tbody>

@@ -13,6 +13,9 @@ const sortSelect = document.querySelector("#sort-select");
 
 const favoritesList = document.querySelector("#favorites-list");
 const themeToggle = document.querySelector("#theme-toggle");
+const characterDetails = document.querySelector("#character-details");
+
+const searchMessage = document.querySelector("#search-message");
 
 let favorites = loadFavorites();
 let allCharacters = [];
@@ -25,13 +28,9 @@ const renderCharacters = (characters) => {
 
     row.innerHTML = `
       <td>${character.name}</td>
-      <td>${character.height}</td>
-      <td>${character.mass}</td>
-      <td>${character.eyeColor}</td>
-      <td>${character.birthYear}</td>
       <td>${character.gender}</td>
       <td>
-        <button class="btn favorite-btn" data-name="${character.name}">
+        <button class="btn favorite-btn">
           Favoriet
         </button>
 
@@ -59,18 +58,58 @@ const renderCharacters = (characters) => {
     });
 
     detailsButton.addEventListener("click", () => {
-      alert(`
-Naam: ${character.name}
-Lengte: ${character.height} cm
-Gewicht: ${character.mass} kg
-Oogkleur: ${character.eyeColor}
-Geboortejaar: ${character.birthYear}
-Geslacht: ${character.gender}
-      `);
+      characterDetails.innerHTML = `
+        <h3>${character.name}</h3>
+        <p>Lengte: ${character.height} cm</p>
+        <p>Gewicht: ${character.mass} kg</p>
+        <p>Oogkleur: ${character.eyeColor}</p>
+        <p>Geboortejaar: ${character.birthYear}</p>
+        <p>Geslacht: ${character.gender}</p>
+
+        <button id="close-details" class="btn">
+          Sluiten
+        </button>
+      `;
+
+      const closeButton = document.querySelector("#close-details");
+
+      closeButton.addEventListener("click", () => {
+        characterDetails.innerHTML = `
+          <p>Klik op Details om meer informatie te zien.</p>
+        `;
+      });
     });
   });
 
   observeRows();
+};
+
+const renderFavorites = () => {
+  favoritesList.innerHTML = "";
+
+  favorites.forEach((character) => {
+    const listItem = document.createElement("li");
+
+    listItem.innerHTML = `
+      ${character.name}
+      <button class="remove-favorite">
+        Verwijderen
+      </button>
+    `;
+
+    const removeButton = listItem.querySelector(".remove-favorite");
+
+    removeButton.addEventListener("click", () => {
+      favorites = favorites.filter((favorite) => {
+        return favorite.name !== character.name;
+      });
+
+      saveFavorites(favorites);
+      renderFavorites();
+    });
+
+    favoritesList.appendChild(listItem);
+  });
 };
 
 const observeRows = () => {
@@ -92,7 +131,7 @@ const observeRows = () => {
 const updateCharacters = () => {
   let filteredCharacters = [...allCharacters];
 
-  const searchValue = searchInput.value.toLowerCase();
+const searchValue = searchInput.value.trim().toLowerCase();
   const selectedGender = genderFilter.value;
 
   if (searchValue !== "") {
@@ -116,12 +155,27 @@ const updateCharacters = () => {
       return b.name.localeCompare(a.name);
     });
   }
-
+if (filteredCharacters.length === 0) {
+  searchMessage.textContent = "Geen personages gevonden.";
+  searchMessage.hidden = false;
+} else {
+  searchMessage.hidden = true;
+}
   renderCharacters(filteredCharacters);
 };
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
+
+  const searchValue = searchInput.value.trim();
+
+  if (searchValue === "") {
+    searchMessage.textContent = "Vul een naam in om te zoeken.";
+    searchMessage.hidden = false;
+    return;
+  }
+
+  searchMessage.hidden = true;
   updateCharacters();
 });
 
