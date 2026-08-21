@@ -59,7 +59,21 @@ const renderFavorites = () => {
   favorites.forEach((character) => {
     const listItem = document.createElement("li");
 
-    listItem.textContent = character.name;
+    listItem.innerHTML = `
+      ${character.name}
+      <button class="remove-favorite">Verwijderen</button>
+    `;
+
+    const removeButton = listItem.querySelector(".remove-favorite");
+
+    removeButton.addEventListener("click", () => {
+      favorites = favorites.filter((favorite) => {
+        return favorite.name !== character.name;
+      });
+
+      saveFavorites(favorites);
+      renderFavorites();
+    });
 
     favoritesList.appendChild(listItem);
   });
