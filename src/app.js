@@ -14,11 +14,13 @@ const sortSelect = document.querySelector("#sort-select");
 const favoritesList = document.querySelector("#favorites-list");
 const themeToggle = document.querySelector("#theme-toggle");
 const characterDetails = document.querySelector("#character-details");
-
 const searchMessage = document.querySelector("#search-message");
 
 let favorites = loadFavorites();
 let allCharacters = [];
+
+
+/* PERSONAGES TONEN */
 
 const renderCharacters = (characters) => {
   tableBody.innerHTML = "";
@@ -28,7 +30,12 @@ const renderCharacters = (characters) => {
 
     row.innerHTML = `
       <td>${character.name}</td>
+      <td>${character.height}</td>
+      <td>${character.mass}</td>
+      <td>${character.eyeColor}</td>
+      <td>${character.birthYear}</td>
       <td>${character.gender}</td>
+
       <td>
         <button class="btn favorite-btn">
           Favoriet
@@ -45,6 +52,9 @@ const renderCharacters = (characters) => {
     const favoriteButton = row.querySelector(".favorite-btn");
     const detailsButton = row.querySelector(".details-btn");
 
+
+    /* FAVORIET TOEVOEGEN */
+
     favoriteButton.addEventListener("click", () => {
       const alreadyFavorite = favorites.some((favorite) => {
         return favorite.name === character.name;
@@ -52,19 +62,30 @@ const renderCharacters = (characters) => {
 
       if (!alreadyFavorite) {
         favorites.push(character);
+
         saveFavorites(favorites);
         renderFavorites();
       }
     });
 
+
+    /* DETAILS TONEN */
+
     detailsButton.addEventListener("click", () => {
       characterDetails.innerHTML = `
         <h3>${character.name}</h3>
-        <p>Lengte: ${character.height} cm</p>
-        <p>Gewicht: ${character.mass} kg</p>
-        <p>Oogkleur: ${character.eyeColor}</p>
-        <p>Geboortejaar: ${character.birthYear}</p>
-        <p>Geslacht: ${character.gender}</p>
+
+        <p><strong>Naam:</strong> ${character.name}</p>
+        <p><strong>Lengte:</strong> ${character.height} cm</p>
+        <p><strong>Gewicht:</strong> ${character.mass} kg</p>
+        <p><strong>Oogkleur:</strong> ${character.eyeColor}</p>
+        <p><strong>Geboortejaar:</strong> ${character.birthYear}</p>
+        <p><strong>Geslacht:</strong> ${character.gender}</p>
+        <p><strong>Haarkleur:</strong> ${character.hairColor}</p>
+        <p><strong>Huidskleur:</strong> ${character.skinColor}</p>
+        <p><strong>Aantal films:</strong> ${character.films.length}</p>
+        <p><strong>Aantal voertuigen:</strong> ${character.vehicles.length}</p>
+        <p><strong>Aantal ruimteschepen:</strong> ${character.starships.length}</p>
 
         <button id="close-details" class="btn">
           Sluiten
@@ -75,7 +96,7 @@ const renderCharacters = (characters) => {
 
       closeButton.addEventListener("click", () => {
         characterDetails.innerHTML = `
-          <p>Klik op Details om meer informatie te zien.</p>
+          <p>Klik op Details om meer informatie over een personage te bekijken.</p>
         `;
       });
     });
@@ -83,6 +104,9 @@ const renderCharacters = (characters) => {
 
   observeRows();
 };
+
+
+/* FAVORIETEN TONEN */
 
 const renderFavorites = () => {
   favoritesList.innerHTML = "";
@@ -92,6 +116,7 @@ const renderFavorites = () => {
 
     listItem.innerHTML = `
       ${character.name}
+
       <button class="remove-favorite">
         Verwijderen
       </button>
@@ -112,6 +137,9 @@ const renderFavorites = () => {
   });
 };
 
+
+/* ANIMATIE */
+
 const observeRows = () => {
   const rows = document.querySelectorAll("#characters-table-body tr");
 
@@ -128,11 +156,17 @@ const observeRows = () => {
   });
 };
 
+
+/* ZOEKEN + FILTEREN + SORTEREN */
+
 const updateCharacters = () => {
   let filteredCharacters = [...allCharacters];
 
-const searchValue = searchInput.value.trim().toLowerCase();
+  const searchValue = searchInput.value.trim().toLowerCase();
   const selectedGender = genderFilter.value;
+
+
+  /* ZOEKEN */
 
   if (searchValue !== "") {
     filteredCharacters = filteredCharacters.filter((character) => {
@@ -140,11 +174,17 @@ const searchValue = searchInput.value.trim().toLowerCase();
     });
   }
 
+
+  /* FILTEREN */
+
   if (selectedGender !== "all") {
     filteredCharacters = filteredCharacters.filter((character) => {
       return character.gender === selectedGender;
     });
   }
+
+
+  /* SORTEREN */
 
   if (sortSelect.value === "name-asc") {
     filteredCharacters.sort((a, b) => {
@@ -155,14 +195,22 @@ const searchValue = searchInput.value.trim().toLowerCase();
       return b.name.localeCompare(a.name);
     });
   }
-if (filteredCharacters.length === 0) {
-  searchMessage.textContent = "Geen personages gevonden.";
-  searchMessage.hidden = false;
-} else {
-  searchMessage.hidden = true;
-}
+
+
+  /* GEEN RESULTATEN */
+
+  if (filteredCharacters.length === 0) {
+    searchMessage.textContent = "Geen personages gevonden.";
+    searchMessage.hidden = false;
+  } else {
+    searchMessage.hidden = true;
+  }
+
   renderCharacters(filteredCharacters);
 };
+
+
+/* ZOEKFORMULIER */
 
 searchForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -176,16 +224,26 @@ searchForm.addEventListener("submit", (event) => {
   }
 
   searchMessage.hidden = true;
+
   updateCharacters();
 });
+
+
+/* FILTER */
 
 genderFilter.addEventListener("change", () => {
   updateCharacters();
 });
 
+
+/* SORTEREN */
+
 sortSelect.addEventListener("change", () => {
   updateCharacters();
 });
+
+
+/* THEMA */
 
 const savedTheme = localStorage.getItem("theme");
 
@@ -202,6 +260,9 @@ themeToggle.addEventListener("click", () => {
     localStorage.setItem("theme", "light");
   }
 });
+
+
+/* APP STARTEN */
 
 const initApp = async () => {
   loadingMessage.hidden = false;
